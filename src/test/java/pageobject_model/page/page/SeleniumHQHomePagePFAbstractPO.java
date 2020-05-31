@@ -7,7 +7,6 @@ import org.openqa.selenium.support.PageFactory;
 
 public class SeleniumHQHomePagePFAbstractPO extends AbstractPage {
     private static final String HOMEPAGE_URL = "https://mvnrepository.com/";
-    private WebDriver driver;
 
     @FindBy(id = "query")
     private WebElement searchInput;
