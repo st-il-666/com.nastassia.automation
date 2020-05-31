@@ -27,7 +27,7 @@ public class PasteCreationPage {
     private WebElement titleField;
 
     @FindBy(id = "success")
-    private WebElement successMessage;
+    private WebElement successMessageForGuest;
 
     @FindBy(id = "submit")
     private WebElement submitButton;
@@ -64,10 +64,10 @@ public class PasteCreationPage {
         return this;
     }
 
-    public boolean createPasteSuccessfully() {
+    public boolean createGuestPasteSuccessfully() {
         submitButton.click();
         waitForElementLocatedBy(driver, By.id("content_frame"));
-        return successMessage.isDisplayed();
+        return successMessageForGuest.isDisplayed();
     }
 
     private static WebElement waitForElementLocatedBy(WebDriver driver, By by) {

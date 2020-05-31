@@ -27,7 +27,7 @@ public class PasteCreationTest {
                         "  }")
                 .pasteExpiration("10 Minutes")
                 .pasteName("helloweb")
-                .createPasteSuccessfully();
+                .createGuestPasteSuccessfully();
         Assert.assertTrue(pasteCreation, "Paste is created successfully!");
     }
 
