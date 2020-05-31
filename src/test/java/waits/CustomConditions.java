@@ -9,16 +9,9 @@ public class CustomConditions {
         return new ExpectedCondition<Boolean>() {
 
             public Boolean apply(WebDriver driver) {
-                return (Boolean) ((JavascriptExecutor)
-                        driver).executeScript("return (window.jQuery != null) && (jQuery.active == = 0); " );
+                return ((JavascriptExecutor) driver).executeScript("return jQuery.active == 0").equals(true);
             }
         };
-//        WebDriverWait wait = new WebDriverWait(driver, 5000);
-//        wait.until(new ExpectedCondition<Boolean>() {
-//
-//            public Boolean apply(WebDriver wdriver) {
-//                return ((JavascriptExecutor) driver).executeScript("return jQuery.active == 0").equals(true);
-//            }
-//        });
     }
+
 }
