@@ -44,18 +44,19 @@ public class SimpleComputeEngineEstimation {
     public void necessaryPageOpen() {
         SearchResultsPage calculatePageOpen = new SearchResultsPage(driver)
                 .openNecessaryPage(searchTerm);
-        waitForElementLocatedBy(driver, By.className("devsite-doc-set-nav-row"));
-        Assert.assertTrue(driver.findElement(By.className("devsite-doc-set-nav-row")).isDisplayed(), "Necessary page is opened");
+        waitForElementLocatedBy(driver, By.className("devsite-main-content"));
+        Assert.assertTrue(driver.findElement(By.className("devsite-main-content")).isDisplayed(), "Necessary page is opened");
     }
 
     @Test(description = "Simple compute engine estimation", dependsOnMethods = "necessaryPageOpen")
     public void calculatePrice() {
         GoogleCloudPlatformPricingCalculatorPage estimation = new GoogleCloudPlatformPricingCalculatorPage(driver)
                 .activateSection()
-                .fillForm();
-        //        .addToEstimate();
+                .fillForm()
+                .addToEstimate();
    //     Assert.assertTrue(estimation, "Estimation is done");
     }
+
 
 //    @Test(description = "Verification of the data conformity", dependsOnMethods = "calculatePrice")
 //    public void verifyInputDataConformity() {
