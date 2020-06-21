@@ -19,8 +19,8 @@ import java.util.concurrent.TimeUnit;
 public class SimpleComputeEngineEstimation {
 
     private WebDriver driver;
-    private double rentAmountPerMonth = 0.0;
-    private String searchTerm = "Google Cloud Platform Pricing Calculator";
+    private final String expectedRentAmountPerMonth = "1,082.77";
+    private final String searchTerm = "Google Cloud Platform Pricing Calculator";
 
 
     @BeforeSuite(alwaysRun = true)
@@ -50,32 +50,55 @@ public class SimpleComputeEngineEstimation {
 
     @Test(description = "Simple compute engine estimation", dependsOnMethods = "necessaryPageOpen")
     public void calculatePrice() {
-        GoogleCloudPlatformPricingCalculatorPage estimation = new GoogleCloudPlatformPricingCalculatorPage(driver)
+        boolean estimation = new GoogleCloudPlatformPricingCalculatorPage(driver)
                 .activateSection()
                 .fillForm()
                 .addToEstimate();
-   //     Assert.assertTrue(estimation, "Estimation is done");
+        Assert.assertTrue(estimation, "Estimation is done");
     }
 
 
-//    @Test(description = "Verification of the data conformity", dependsOnMethods = "calculatePrice")
-//    public void verifyInputDataConformity() {
-//        boolean dataVerification = new GoogleCloudPlatformPricingCalculatorPage(driver)
-//                .checkVMClass()
-//                .checkInstanceType()
-//                .checkRegion()
-//                .checkLocalSSD()
-//                .checkCommitmentTerm();
-//        Assert.assertTrue(dataVerification, "Data matches the entered data");
-//    }
-//
-//    @Test(description = "Verification of the conformity of the rental amount per month with the amount obtained by manually passing the test", dependsOnMethods = "verifyInputDataConformity")
-//    public void verifyDataConformityWithManualTestAmount() {
-//        double conformityVerification = new GoogleCloudPlatformPricingCalculatorPage(driver)
-//                .findRentAmountPerMonthWithAutomatedTest();
-//        Assert.assertEquals(rentAmountPerMonth, conformityVerification);
-//    }
+    @Test(description = "Verification of the VM Class conformity", dependsOnMethods = "calculatePrice")
+    public void verifyVMClassConformity() {
+        boolean verificationOfVMClass = new GoogleCloudPlatformPricingCalculatorPage(driver)
+                .checkVMClass();
+        Assert.assertTrue(verificationOfVMClass, "VM Class in the estimation block does not meet the expected result");
+    }
 
+    @Test(description = "Verification of the instance type conformity", dependsOnMethods = "calculatePrice")
+    public void verifyInputDataConformity() {
+        boolean verificationOfInstanceType = new GoogleCloudPlatformPricingCalculatorPage(driver)
+                .checkInstanceType();
+        Assert.assertTrue(verificationOfInstanceType, "The instance type in the estimation block does not meet the expected result");
+    }
+
+    @Test(description = "Verification of the Region conformity", dependsOnMethods = "calculatePrice")
+    public void verifyRegionConformity() {
+        boolean verificationOfRegion = new GoogleCloudPlatformPricingCalculatorPage(driver)
+                .checkRegion();
+        Assert.assertTrue(verificationOfRegion, "The Region in the estimation block does not meet the expected result");
+    }
+
+    @Test(description = "Verification of the local SSD space conformity", dependsOnMethods = "calculatePrice")
+    public void verifyLocalSSDConformity() {
+        boolean verificationOfLocalSSD = new GoogleCloudPlatformPricingCalculatorPage(driver)
+                .checkLocalSSD();
+        Assert.assertTrue(verificationOfLocalSSD, "A total available local SSD space in the estimation block does not meet the expected result");
+    }
+
+    @Test(description = "Verification of the commitment term conformity", dependsOnMethods = "calculatePrice")
+    public void verifyCommitmentTermConformity() {
+        boolean verificationOfCommitmentTerm = new GoogleCloudPlatformPricingCalculatorPage(driver)
+                .checkCommitmentTerm();
+        Assert.assertTrue(verificationOfCommitmentTerm, "The commitment term in the estimation block does not meet the expected result");
+    }
+
+    @Test(description = "Verification of the conformity of the rental amount per month with the amount obtained by manually passing the test", dependsOnMethods = "calculatePrice")
+    public void verifyRentalAmountCoincideWithManualTestAmount() {
+        String rentAmountPerMonthWithAutomatedTest = new GoogleCloudPlatformPricingCalculatorPage(driver)
+                .findRentAmountPerMonthWithAutomatedTest();
+        Assert.assertTrue(rentAmountPerMonthWithAutomatedTest.contains(expectedRentAmountPerMonth), "The rental amount per month does not coincide with the amount obtained by passing the test manually");
+    }
 
     @AfterSuite(alwaysRun = true)
 

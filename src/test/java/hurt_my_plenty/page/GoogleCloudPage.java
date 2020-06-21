@@ -8,7 +8,6 @@ import org.openqa.selenium.support.PageFactory;
 public class GoogleCloudPage {
 
     private final WebDriver driver;
-    private String homePage = "https://cloud.google.com/";
 
     @FindBy(name = "q")
     private WebElement searchField;
@@ -19,6 +18,7 @@ public class GoogleCloudPage {
     }
 
     public GoogleCloudPage openPage() {
+        String homePage = "https://cloud.google.com/";
         driver.get(homePage);
         return this;
     }
