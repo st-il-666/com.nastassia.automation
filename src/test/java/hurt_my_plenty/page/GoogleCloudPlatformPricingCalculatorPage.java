@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -13,6 +14,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class GoogleCloudPlatformPricingCalculatorPage {
 
     private final WebDriver driver;
+
+
 
     @FindBy(xpath = "//md-pagination-wrapper/md-tab-item[1]//div[@class='hexagon-in2']")
     private WebElement computeEngine;
@@ -41,13 +44,13 @@ public class GoogleCloudPlatformPricingCalculatorPage {
     @FindBy(id = "select_value_label_55")
     private WebElement machineType;
 
-    @FindBy(xpath = "//*[@id=\"select_option_213\"]/div")
+    @FindBy(css = "#select_option_213")
     private WebElement standardEightType;
 
     @FindBy(xpath = "//*[@id=\"mainForm\"]//md-checkbox/div[1]")
     private WebElement checkboxGPUs;
 
-    @FindBy(id = "select_option_342")
+    @FindBy(id = "select_337")
     private WebElement numberOfGPUs;
 
     @FindBy(id = "select_value_label_336")
@@ -62,20 +65,23 @@ public class GoogleCloudPlatformPricingCalculatorPage {
     @FindBy(id = "select_value_label_96")
     private WebElement committedUsage;
 
-    @FindBy(xpath = "//*[@id=\"select_option_342\"]/div")
+    @FindBy(css = "#select_option_342")
     private WebElement necessaryNumberOfGPUs;
 
-    @FindBy(xpath = "//*[@id=\"select_option_105\"]/div")
+    @FindBy(css = "#select_option_90")
     private WebElement necessaryCommittedUsage;
 
-    @FindBy(xpath = "//*[@id=\"select_option_234\"]/div[1]")
+    @FindBy(css = "#select_option_234")
     private WebElement necessaryLocalSSD;
 
-    @FindBy(xpath = "//*[@id=\"select_option_349\"]/div")
+    @FindBy(css = "#select_option_349")
     private WebElement necessaryTypeOfGPUs;
 
-    @FindBy(xpath = "//*[@id=\"select_option_181\"]/div")
+    @FindBy(css = "#select_option_181")
     private WebElement necessaryLocation;
+
+    @FindBy(xpath = "//form[@name='ComputeEngineForm']/div[@class='layout-align-end-start layout-row']/button[@type='button']")
+    private WebElement addToEstimate;
 
 
     public GoogleCloudPlatformPricingCalculatorPage(WebDriver driver) {
@@ -94,39 +100,54 @@ public class GoogleCloudPlatformPricingCalculatorPage {
     }
 
     public GoogleCloudPlatformPricingCalculatorPage fillForm() {
+        JavascriptExecutor executor = (JavascriptExecutor) driver;
         WebDriverWait wait = new WebDriverWait(driver, 20);
         instancesNumber.sendKeys("4");
-        JavascriptExecutor executor = (JavascriptExecutor) driver;
         ClickWithJSExecutor(executor, "arguments[0].click();", software);
-        softwareOption.click();
-        wait.until(ExpectedConditions.elementToBeClickable(regularVMDropdown));
+        wait.until(ExpectedConditions.visibilityOf(softwareOption));
+        ClickWithJSExecutor(executor, "arguments[0].click();", softwareOption);
 
+        wait.until(ExpectedConditions.elementToBeClickable(regularVMDropdown));
         ClickWithJSExecutor(executor, "arguments[0].scrollIntoView();", regularVMDropdown);
         ClickWithJSExecutor(executor, "arguments[0].click();", regularVMDropdown);
-        regularVM.click();
+        ClickWithJSExecutor(executor, "arguments[0].click();", regularVM);
 
         ClickWithJSExecutor(executor, "arguments[0].click();", machineType);
-        standardEightType.click();
+        wait.until(ExpectedConditions.visibilityOf(standardEightType));
+        ClickWithJSExecutor(executor, "arguments[0].click();", standardEightType);
 
         ClickWithJSExecutor(executor, "arguments[0].click();", checkboxGPUs);
+        wait.until(ExpectedConditions.visibilityOf(numberOfGPUs));
         ClickWithJSExecutor(executor, "arguments[0].click();", numberOfGPUs);
-        necessaryNumberOfGPUs.click();
+        ClickWithJSExecutor(executor, "arguments[0].click();", necessaryNumberOfGPUs);
         ClickWithJSExecutor(executor, "arguments[0].click();", typeGPU);
         if (!necessaryTypeOfGPUs.isEnabled()){
             System.out.println("Sorry, this GPU type is disabled");
         }
-        necessaryTypeOfGPUs.click();
+        ClickWithJSExecutor(executor, "arguments[0].click();", necessaryTypeOfGPUs);
 
         ClickWithJSExecutor(executor, "arguments[0].scrollIntoView();", localSSDBox);
         ClickWithJSExecutor(executor, "arguments[0].click();", localSSDBox);
-        necessaryLocalSSD.click();
+        wait.until(ExpectedConditions.visibilityOf(necessaryLocalSSD));
+        ClickWithJSExecutor(executor, "arguments[0].click();", necessaryLocalSSD);
 
         ClickWithJSExecutor(executor, "arguments[0].click();", dataCenterLocation);
-        necessaryLocation.click();
+        wait.until(ExpectedConditions.visibilityOf(necessaryLocation));
+        ClickWithJSExecutor(executor, "arguments[0].click();", necessaryLocation);
 
         ClickWithJSExecutor(executor, "arguments[0].click();", committedUsage);
-        necessaryCommittedUsage.click();
+        ClickWithJSExecutor(executor, "arguments[0].click();", necessaryCommittedUsage);
 
+        return this;
+    }
+
+    public GoogleCloudPlatformPricingCalculatorPage addToEstimate() {
+        JavascriptExecutor executor = (JavascriptExecutor) driver;
+        WebDriverWait wait = new WebDriverWait(driver, 20);
+
+        ClickWithJSExecutor(executor, "arguments[0].scrollIntoView();", addToEstimate);
+        wait.until(ExpectedConditions.visibilityOf(addToEstimate));
+        executor.executeScript("arguments[0].click();", addToEstimate);
         return this;
     }
 
