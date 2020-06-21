@@ -30,28 +30,28 @@ public class BashPasteCreationTest {
                 .pasteExpiration("10 Minutes")
                 .pasteName(title)
                 .createGuestPasteSuccessfully();
-        Assert.assertTrue(pasteCreation, "Paste is created successfully!");
+        Assert.assertTrue(pasteCreation, "Paste is not created!");
     }
 
     @Test(description = "Validation of a successful title insert", dependsOnMethods = "creationOfPaste")
     public void checkSuccessfulTitleInsert() {
         boolean titleInsert = new BashPastePostedPage(driver)
                 .checkTitle(title);
-        Assert.assertTrue(titleInsert, "Page title matches insert Name / Title ");
+        Assert.assertTrue(titleInsert, "Page title does not match insert Name / Title ");
     }
 
     @Test(description = "Validation of a successful syntax highlighting", dependsOnMethods = "creationOfPaste")
     public void checkSyntaxHighlighting() {
         boolean codeHighlight = new BashPastePostedPage(driver)
                 .syntaxIsHighlighted(language);
-        Assert.assertTrue(codeHighlight, "Syntax id highlighted for bash");
+        Assert.assertTrue(codeHighlight, "Syntax id is not highlighted for bash");
     }
 
     @Test(description = "Validation of a successful code insert", dependsOnMethods = "creationOfPaste")
     public void checkCodeInsert() {
         boolean codeInsert = new BashPastePostedPage(driver)
                 .checkCode(bashCode);
-        Assert.assertTrue(codeInsert, "Code on a successful page matches insert code");
+        Assert.assertTrue(codeInsert, "Code on a successful page does not match the insert code");
     }
 
     @AfterSuite(alwaysRun = true)

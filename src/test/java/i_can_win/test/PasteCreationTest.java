@@ -28,7 +28,7 @@ public class PasteCreationTest {
                 .pasteExpiration("10 Minutes")
                 .pasteName("helloweb")
                 .createGuestPasteSuccessfully();
-        Assert.assertTrue(pasteCreation, "Paste is created successfully!");
+        Assert.assertTrue(pasteCreation, "Paste is not created!");
     }
 
     @AfterMethod(alwaysRun = true)
