@@ -37,7 +37,7 @@ public class SimpleComputeEngineEstimation {
                 .openPage()
                 .searchTerm(searchTerm);
         waitForElementLocatedBy(driver, By.className("devsite-article-body"));
-        Assert.assertTrue(driver.findElement(By.className("devsite-article")).isDisplayed(), "Page with search Results is opened");
+        Assert.assertTrue(driver.findElement(By.className("devsite-article")).isDisplayed(), "Page with search Results is not opened");
     }
 
     @Test(description = "Necessary page open test", dependsOnMethods = "searchResultsPageOpen")
@@ -45,7 +45,7 @@ public class SimpleComputeEngineEstimation {
         SearchResultsPage calculatePageOpen = new SearchResultsPage(driver)
                 .openNecessaryPage(searchTerm);
         waitForElementLocatedBy(driver, By.className("devsite-main-content"));
-        Assert.assertTrue(driver.findElement(By.className("devsite-main-content")).isDisplayed(), "Necessary page is opened");
+        Assert.assertTrue(driver.findElement(By.className("devsite-main-content")).isDisplayed(), "Necessary page is not opened");
     }
 
     @Test(description = "Simple compute engine estimation", dependsOnMethods = "necessaryPageOpen")
@@ -54,7 +54,7 @@ public class SimpleComputeEngineEstimation {
                 .activateSection()
                 .fillForm()
                 .addToEstimate();
-        Assert.assertTrue(estimation, "Estimation is done");
+        Assert.assertTrue(estimation, "Estimation is not done");
     }
 
 
